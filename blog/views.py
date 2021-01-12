@@ -8,5 +8,5 @@ class PostList(ListView):
     def get_queryset(self):
         return Post.objects.order_by('-created')
 
-
-
+def post_detail(request, pk):
+    blog_post = Post.objects.get(pk=pk)
