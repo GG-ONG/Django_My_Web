@@ -85,6 +85,13 @@ class TestView(TestCase):
             author=self.author_000,
         )
 
+        post_001 = create_post(
+            title='The second post',
+            content='Second',
+            author=self.author_000,
+            category=create_category(name='정치/사회')
+        )
+
         self.assertGreater(Post.objects.count(),0)
 
         response = self.client.get('/blog/')
@@ -98,6 +105,14 @@ class TestView(TestCase):
 
         post_000_read_more_btn = body.find('a', id='read-more-post-{}'.format(post_000.pk))
         self.assertEqual(post_000_read_more_btn['href'], post_000.get_absolute_url())
+
+        category_card = body.find('div', id='category-card')
+        self.assertIn('미분류 (1)', category_card.text)
+        self.assertIn('정치/사회 (1)', category_card.text)
+
+        main_div = body.find('div', id='main_div')
+        self.assertIn('정치/사회', main_div.text)
+        self.assertIn('미분류', main_div.text)
 
     def test_post_detail(self):
         post_000 = create_post(
