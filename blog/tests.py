@@ -64,6 +64,15 @@ class TestView(TestCase):
         self.assertIn('Blog', navbar.text)
         self.assertIn('About me', navbar.text)
 
+    def check_right_side(self, soup):
+        category_card = soup.find('div', id='category-card')
+        self.assertIn('미분류 (1)', category_card.text)
+        self.assertIn('정치/사회 (1)', category_card.text)
+
+        main_div = soup.find('div', id='main_div')
+        self.assertIn('정치/사회', main_div.text)
+        self.assertIn('미분류', main_div.text)
+
     def test_post_list_no_post(self):
         response = self.client.get('/blog/')
         self.assertEqual(response.status_code, 200)
@@ -106,13 +115,7 @@ class TestView(TestCase):
         post_000_read_more_btn = body.find('a', id='read-more-post-{}'.format(post_000.pk))
         self.assertEqual(post_000_read_more_btn['href'], post_000.get_absolute_url())
 
-        category_card = body.find('div', id='category-card')
-        self.assertIn('미분류 (1)', category_card.text)
-        self.assertIn('정치/사회 (1)', category_card.text)
-
-        main_div = body.find('div', id='main_div')
-        self.assertIn('정치/사회', main_div.text)
-        self.assertIn('미분류', main_div.text)
+        self.check_right_side(soup)
 
     def test_post_detail(self):
         post_000 = create_post(
