@@ -69,9 +69,6 @@ class TestView(TestCase):
         self.assertIn('미분류 (1)', category_card.text)
         self.assertIn('정치/사회 (1)', category_card.text)
 
-        main_div = soup.find('div', id='main_div')
-        self.assertIn('정치/사회', main_div.text)
-        self.assertIn('미분류', main_div.text)
 
     def test_post_list_no_post(self):
         response = self.client.get('/blog/')
@@ -117,11 +114,22 @@ class TestView(TestCase):
 
         self.check_right_side(soup)
 
+        main_div = soup.find('div', id='main_div')
+        self.assertIn('정치/사회', main_div.text)
+        self.assertIn('미분류', main_div.text)
+
     def test_post_detail(self):
         post_000 = create_post(
             title='The first post',
             content='Hello World, We are the world',
             author=self.author_000,
+        )
+
+        post_001 = create_post(
+            title='The second post',
+            content='Second',
+            author=self.author_000,
+            category=create_category(name='정치/사회')
         )
 
         self.assertGreater(Post.objects.count(), 0)
@@ -145,3 +153,5 @@ class TestView(TestCase):
         self.assertIn(post_000.author.username, main_div.text)
 
         self.assertIn(post_000.content, main_div.text)
+
+        self.check_right_side(soup)
