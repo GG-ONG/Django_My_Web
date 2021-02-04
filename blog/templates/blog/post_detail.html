@@ -28,8 +28,8 @@
 <hr>
 
 <!-- Preview Image -->
-{% if object.head_image %}
-<img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+{% if object.image %}
+<img class="img-fluid rounded" src="{{ object.image.url }}" alt="{{ object.title }}">
 {% endif %}
 
 
