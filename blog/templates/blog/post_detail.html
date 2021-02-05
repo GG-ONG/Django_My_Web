@@ -34,7 +34,7 @@
 
 
 <!-- Post Content -->
-{{ object.content }}
+{{ object.get_markdown_content | safe }}
 
 <br/>
 
