@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from . models import Post, Category, Tag
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from . forms import CommentForm
+
 
 class PostList(ListView):
     model = Post
@@ -22,6 +24,7 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data(**kwargs)
         context['category_list'] = Category.objects.all()
         context['posts_without_category'] = Post.objects.filter(category=None).count()
+        context['comment_form'] = CommentForm()
 
         return context
 
