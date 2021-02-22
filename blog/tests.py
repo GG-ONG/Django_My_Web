@@ -423,7 +423,7 @@ class TestView(TestCase):
             author=self.author_000,
         )
 
-        login_success = self.client.login(username='Test', password='testpassword')  # login을 한 경우
+        login_success = self.client.login(username='Test', password='testpassword')
         self.assertTrue(login_success)
 
         response = self.client.post(
