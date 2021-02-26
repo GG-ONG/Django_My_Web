@@ -472,4 +472,45 @@ class TestView(TestCase):
 
         self.assertNotIn('Test2', main_div.text)
 
+    def test_edit_comment(self):
+        post_000 = create_post(
+            title='The first post',
+            content='Hello World, We are the world',
+            author=self.author_000,
+        )
+
+        comment_000 = create_comment(post_000, text='a test2 comment', author=self.user_Test2)
+        comment_001 = create_comment(post_000, text='a test comment', author=self.author_000)
+
+        # 로그인을 안했을 때
+        with self.assertRaises(PermissionError):
+            response = self.client.get('/blog/edit_comment/{}/'.format(comment_000.pk))
+
+        # 로그인 000으로 했을때
+        login_success = self.client.login(username='Test', password='testpassword')
+        self.assertTrue(login_success)
+        with self.assertRaises(PermissionError):
+            response = self.client.get('/blog/edit_comment/{}/'.format(comment_000.pk))
+
+        # 로그인 Test2로 했을때
+        login_success = self.client.login(username='Test2', password='testpassword')
+        self.assertTrue(login_success)
+        response = self.client.get('/blog/edit_comment/{}/'.format(comment_000.pk))
+        self.assertEqual(response.status_code, 200)
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.assertIn('Edit Comment: ', soup.body.h3)
+
+        response = self.client.post(
+            '/blog/edit_comment/{}/'.format(comment_000.pk),
+            {'text': 'a test2 comment was there'},
+            follow=True
+        )
+
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        #self.assertNotIn('a test2 comment', soup.body.text)
+        self.assertIn('a test2 comment was there', soup.body.text)
+
+
 
