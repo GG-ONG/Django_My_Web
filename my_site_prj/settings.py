@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'basecamp',
     'markdownx',
     'crispy_forms',
     'django.contrib.sites',
