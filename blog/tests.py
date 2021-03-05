@@ -149,8 +149,8 @@ class TestView(TestCase):
 
     def check_right_side(self, soup):
         category_card = soup.find('div', id='category-card')
-        self.assertIn('미분류 (1)', category_card.text)
-        self.assertIn('정치/사회 (1)', category_card.text)
+        self.assertIn('자유 (1)', category_card.text)
+        self.assertIn('게임 (1)', category_card.text)
 
 
     def test_post_list_no_post(self):
@@ -183,7 +183,7 @@ class TestView(TestCase):
             title='The second post',
             content='Second',
             author=self.author_000,
-            category=create_category(name='정치/사회')
+            category=create_category(name='게임')
         )
 
         post_001.tags.add(tag_america)
@@ -206,8 +206,8 @@ class TestView(TestCase):
         self.check_right_side(soup)
 
         main_div = soup.find('div', id='main-div')
-        self.assertIn('정치/사회', main_div.text)
-        self.assertIn('미분류', main_div.text)
+        self.assertIn('게임', main_div.text)
+        self.assertIn('자유', main_div.text)
 
         #Tag
         post_card_000 = main_div.find('div', id='post-card-{}'.format(post_000.pk))
@@ -245,7 +245,7 @@ class TestView(TestCase):
 
 
     def test_post_detail(self):
-        category_politics = create_category(name='정치/사회')
+        category_politics = create_category(name='게임')
         post_000 = create_post(
             title='The first post',
             content='Hello World, We are the world',
@@ -334,7 +334,7 @@ class TestView(TestCase):
 
 
     def test_post_list_by_category(self):
-        category_politics = create_category(name='정치/사회')
+        category_politics = create_category(name='게임')
 
         post_000 = create_post(
             title='The first post',
@@ -355,11 +355,11 @@ class TestView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         main_div = soup.find('div', id='main-div')
-        self.assertNotIn('미분류', main_div.text)
+        self.assertNotIn('자유', main_div.text)
         self.assertIn(category_politics.name, main_div.text)
 
     def test_post_list_no_category(self):
-        category_politics = create_category(name='정치/사회')
+        category_politics = create_category(name='게임')
 
         post_000 = create_post(
             title='The first post',
@@ -380,7 +380,7 @@ class TestView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         main_div = soup.find('div', id='main-div')
-        self.assertIn('미분류', main_div.text)
+        self.assertIn('자유', main_div.text)
         self.assertNotIn(category_politics.name, main_div.text)
 
     def test_tag_page(self):
