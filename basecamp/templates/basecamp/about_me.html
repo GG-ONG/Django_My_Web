@@ -1,7 +1,23 @@
 {% extends 'basecamp/base_full.html' %}
-
+{% load static %}
 {% block content %}
     <div class="container">
-        <h1>About Me</h1>
+        <div class="row">
+                <div class="col-md-9">
+                    <h1 class="my-3">About Me</h1>
+                    <h3 class="my-3">개발 지망 취준생 입니다.</h3>
+                    <h3>게임공학과 5년을 다니면서 무수히 많은 게임을 만들었지만, 기대하지 않고 들었던 파이썬 수업에서 tkinter를 사용하여 만든 날씨 앱 이후, Django를 알게 되었고, Django 사용하여 간편한 손놀림과 타이핑으로 DB관리와 홈페이지를 만들어버리는 마법을 경험하고서, 뒤에서 모든것을 조종하는 전지전능한 자가 되는 듯한 느낌이 들었습니다. 게임 개발에서는 느낄 수 없는 희열이였습니다. 그리고 이길을 가야겠다고 정했습니다.</h3>
+                </div>
+                <div class="col-md">
+                    <img class="img-fluid" src="{% static 'basecamp/images/man.jpg' %}"/>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <h1 class="my-3">연락!</h1>
+                <h3>이메일 : <small>tjddyddl93@gmail.com</small></h3>
+            </div>
+        </div>
+
     </div>
 {% endblock %}
