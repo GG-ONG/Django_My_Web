@@ -26,7 +26,7 @@ SECRET_KEY = 'vw$=pa0x#2p5s&5_w#dt%+_04$ki73en3cso3m##va+jc9)k@r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '211.49.173.58','192.168.0.20']
 
 
 # Application definition
@@ -45,9 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'email_act',
+    'six'
 ]
 
 MIDDLEWARE = [
@@ -156,3 +159,10 @@ MARKDOWNX_MEDIA_PATH = datetime.now().strftime('markdownx/%Y/%m/%d')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/blog/'
+
+EMAIL_HOST = 'smtp.gmail.com' 		 # 메일 호스트 서버
+EMAIL_PORT = '587' 			 # 서버 포트
+EMAIL_HOST_USER = '' 	 # 우리가 사용할 Gmail
+EMAIL_HOST_PASSWORD = ''		 # 우리가 사용할 Gmail p
+EMAIL_USE_TLS = True			 # TLS 보안 설정
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 응답 메일 관련 설정
