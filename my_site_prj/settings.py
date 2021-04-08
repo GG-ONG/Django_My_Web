@@ -56,8 +56,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'email_act',
     'basecamp',
     'markdownx',
+    'ckeditor',
     'crispy_forms',
     'django.contrib.sites',
     'allauth.socialaccount.providers.google',
@@ -104,8 +106,13 @@ WSGI_APPLICATION = 'my_site_prj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mysite',
+        'USER': get_secret('USER'),
+        'PASSWORD': get_secret('PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
+
     }
 }
 
@@ -154,8 +161,8 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID=1
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+SOCIALACCOUNT_AUTO_SIGNUP = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -175,10 +182,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/blog/'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_USERNAME_REQUIRED = False
+
+
 
 
 EMAIL_HOST = 'smtp.gmail.com' 		 # 메일 호스트 서버
@@ -187,3 +192,12 @@ EMAIL_HOST_USER = get_secret('EMAIL_HOST_USER') 	 # 우리가 사용할 Gmail
 EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')		 # 우리가 사용할 Gmail p
 EMAIL_USE_TLS = True			 # TLS 보안 설정
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 응답 메일 관련 설정
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 600,
+    },
+}

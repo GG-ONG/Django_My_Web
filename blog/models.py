@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
+from ckeditor.fields import RichTextField
+from django.conf import settings
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=25, unique=True)
@@ -31,7 +35,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
-    content = MarkdownxField()
+    content = RichTextField()
 
     image = models.ImageField(upload_to='blog/%Y/%m/%d/', blank=True)
 
@@ -55,6 +59,8 @@ class Post(models.Model):
 
     def get_markdown_content(self):
         return markdown(self.content)
+
+
 
 
 class Comment(models.Model):

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+</head>
+<body>
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token%}
+    Email:
+    <br>
+    <input name="email" type="email" value="">
+    <br>
+    Password:
+    <br>
+    <input name="password1" type="password" value="">
+    <br>
+    <input class="btn btn-primary" type="submit" value="LogIn">
+
+</form>
+
+    <h2>Need account? sign up right now! <button onclick="location.href='/email_act/signup'">Sign Up</button></h2>
+
+</body>
+</html>

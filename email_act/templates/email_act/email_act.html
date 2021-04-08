@@ -1,0 +1,8 @@
+
+    {% autoescape off %}
+
+        Hi, {{user.username}} Please click the link to activate your account
+
+        http://211.49.173.58:8002{% url 'activate' uid64=uid token=token %}
+
+    {% endautoescape %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+<form method="POST" action="{% url 'signup' %}">
+    {% csrf_token %}
+    Email:
+    <br>
+    <input name="email" type="email" value="">
+    <br>
+    Instagram:
+    <br>
+    <input name="instagram" type="text" placeholder="optional">
+    <br>
+    TikTok:
+    <br>
+    <input name="tiktok" type="text" placeholder="optional">
+    <br>
+    Password:
+    <br>
+    <input name="password1" type="password" value="">
+    <br>
+    Confirm Password:
+    <br>
+    <input name="password2" type="password" value="">
+    <br>
+    <br>
+    <input class="btn btn-primary" type="submit" value="Sign Up">
+</form>
+
+</body>
+</html>
