@@ -5,6 +5,8 @@ from markdownx.utils import markdown
 from ckeditor.fields import RichTextField
 from django.conf import settings
 
+User = settings.AUTH_USER_MODEL
+
 
 
 class Category(models.Model):

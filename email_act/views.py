@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib import auth
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -7,17 +8,18 @@ from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
-from .models import Profile
+from django.conf import settings
+
+
+
+
+User = get_user_model()
 
 def signup(request):
     if request.method == "POST":
         if request.POST['password1'] == request.POST['password2']:
-            user = User.objects.create_user(username=request.POST['email'], password=request.POST['password1'])
-            username = request.POST['email']
-            instagram = request.POST['instagram']
-            tiktok = request.POST['tiktok']
-            profile = Profile(user=user, username=username, instagram=instagram, tiktok=tiktok)
-            profile.save()
+            user = User.objects.create_user(email=request.POST['email'], password=request.POST['password1'],
+                                            instagram=request.POST['instagram'], tiktok=request.POST['tiktok'])
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
@@ -29,7 +31,7 @@ def signup(request):
                                            'token': account_activation_token.make_token(user),
                                        })
             mail_subject = "Email Activation"
-            user_email = user.username
+            user_email = user.email
             email = EmailMessage(mail_subject, message, to=[user_email])
             email.send()
             return HttpResponse(
@@ -43,10 +45,10 @@ def signup(request):
 
 def login(request):
     if request.method == "POST":
-        username = request.POST['email']
+        email = request.POST['email']
         password = request.POST['password1']
 
-        user = auth.authenticate(request, username=username, password=password)
+        user = auth.authenticate(request, email=email, password=password)
 
         if user is not None:
             auth.login(request, user)

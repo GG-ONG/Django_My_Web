@@ -1,5 +1,17 @@
 from django.contrib import admin
-from .models import *
+from . import models
 # Register your models here.
 
-admin.site.register(Profile)
+@admin.register(models.User)
+class UserAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'email',
+        'instagram',
+        'tiktok',
+    )
+    list_display_links = (
+        'email',
+        'instagram',
+        'tiktok',
+    )
